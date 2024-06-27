@@ -1,0 +1,96 @@
+﻿@page "/notas"
+@rendermode InteractiveServer
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-10">
+            <div class="card">
+                <div class="card">
+                    <div class="card-header">
+                        <button class="btn btn-primary float-end"
+                                @onclick="NavigateToAddNotaPage">
+                            Nova Nota
+                        </button>
+                    </div>
+                </div>
+                @if (NotasList.Count > 0)
+                {
+                    <div class="card-header">
+                        Lista de Notas
+                    </div>
+                    <div class="card-body">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Id</th>
+                                    <th>Conteudo</th>
+                                    <th>DataCriacao</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var nota in NotasList)
+                                {
+                                    <tr>
+                                        <td>@nota.Id</td>
+                                        <td>@nota.Conteudo</td>
+                                        <td>@nota.DataCriacao</td>
+                                        <td>
+                                            <div class="hstack gap-2">
+                                                <button class="btn  btn-info" @onclick="()=>Edit(nota)"> Edita</button>
+                                                <button class="btn  btn-danger" @onclick="() => Delete(nota.Id)"> Deleta</button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                }
+                else
+                {
+                    <div class="alert alert-info"> Nenhuma nota disponível </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+    private List<Nota> NotasList { get; set; } = new();
+    private async Task CarregaNotas()
+    {
+        var notas = await _notaService.GetAllNotasAsync();
+
+        NotasList?.Clear();
+
+        if (NotasList is null) return;
+
+        foreach (var nota in notas)
+            NotasList.Add(nota);
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        await CarregaNotas();
+    }
+
+    //incluir
+    private void NavigateToAddNotaPage()
+    {
+        _navigation.NavigateTo("manutencaonota");
+    }
+
+    //editar
+    private void Edit(Nota model)
+    {
+        _navigation.NavigateTo($"manutencaonota/{model.Id}");
+    }
+
+    //deletar
+    private async Task Delete(int id)
+    {
+        var nota = await _notaService.DeleteNotaAsync(id);
+        await CarregaNotas();
+    }
+}

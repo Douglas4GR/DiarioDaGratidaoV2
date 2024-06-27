@@ -1,0 +1,61 @@
+﻿@page "/manutencaonota"
+@page "/manutencaonota/{Id:int}"
+@rendermode InteractiveAuto
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-10">
+            <div class="card">
+                <div class="card-header">Manutenção</div>
+                <div class="card-body">
+                    <EditForm Model="NotaModel" OnValidSubmit="HandleSalvar" FormName="Nota">
+                        <DataAnnotationsValidator />
+                        <ValidationSummary />
+                        <div class="form-group">
+                            <label class="form-label">Conteudo</label>
+                            <InputText @bind-Value="NotaModel.Conteudo" class="form-control"></InputText>
+                            <ValidationMessage For="()=>NotaModel.Conteudo"></ValidationMessage>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary mt-2"> Salvar</button>
+                    </EditForm>
+                </div>
+
+                <div class="card-footer">
+                    @* Id: @ReturnNota.Id <br /> *@
+                    Conteudo:@ReturnNota.Conteudo
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+
+    public Nota NotaModel { get; set; } = new();
+    [Parameter] public int Id { get; set; }
+
+    private Nota ReturnNota = new();
+
+    private async Task HandleSalvar()
+    {
+        if (NotaModel.Id > 0)
+        {
+            NotaModel.DataCriacao = DateTime.Now;
+            ReturnNota = await _notaService.UpdateNotaAsync(NotaModel);
+            NotaModel = new();
+        }
+        else
+        {
+            NotaModel.DataCriacao = DateTime.Now;
+            ReturnNota = await _notaService.AddNotaAsync(NotaModel);
+            NotaModel = new();
+        }
+    }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        if (Id > 0)
+            NotaModel = await _notaService.GetNotaAsync(Id);
+    }
+}
