@@ -5,14 +5,6 @@
     <div class="row">
         <div class="col-md-10">
             <div class="card">
-                <div class="card">
-                    <div class="card-header">
-                        <button class="btn btn-primary float-end"
-                                @onclick="NavigateToAddNotaPage">
-                            Nova Nota
-                        </button>
-                    </div>
-                </div>
                 @if (NotasList.Count > 0)
                 {
                     <div class="card-header">
@@ -51,6 +43,16 @@
                 {
                     <div class="alert alert-info"> Nenhuma nota disponível </div>
                 }
+            </div>
+        </div>
+        <div class="col-12 mt-3">
+            <div class="card">
+                <div class="card-header">
+                    <button class="btn btn-primary float-end"
+                            @onclick="NavigateToAddNotaPage">
+                        Nova Nota
+                    </button>
+                </div>
             </div>
         </div>
     </div>
