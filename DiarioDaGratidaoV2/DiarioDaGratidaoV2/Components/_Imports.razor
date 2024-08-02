@@ -1,5 +1,6 @@
 ﻿@using System.Net.Http
 @using System.Net.Http.Json
+@using DiarioDaGratidaoV2.Shared.Interfaces
 @using Microsoft.AspNetCore.Components.Forms
 @using Microsoft.AspNetCore.Components.Routing
 @using Microsoft.AspNetCore.Components.Web
@@ -11,3 +12,8 @@
 @using DiarioDaGratidaoV2.Components
 @using DiarioDaGratidaoV2.Context
 @using DiarioDaGratidaoV2.Repositories
+@using DiarioDaGratidaoV2.Shared.Entidades
+@using DiarioDaGratidaoV2.Shared.Interfaces
+
+@inject INotaRepository _notaService
+@inject IJSRuntime js
