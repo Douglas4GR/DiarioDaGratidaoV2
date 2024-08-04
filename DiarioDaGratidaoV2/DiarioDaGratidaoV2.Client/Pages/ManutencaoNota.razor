@@ -20,11 +20,6 @@
                         <button type="submit" class="btn btn-primary mt-2"> Salvar</button>
                     </EditForm>
                 </div>
-
-                <div class="card-footer">
-                    @* Id: @ReturnNota.Id <br /> *@
-                    Conteudo:@ReturnNota.Conteudo
-                </div>
             </div>
         </div>
     </div>
@@ -44,12 +39,14 @@
             NotaModel.DataCriacao = DateTime.Now;
             ReturnNota = await _notaService.UpdateNotaAsync(NotaModel);
             NotaModel = new();
+            _navigation.NavigateTo("notas");
         }
         else
         {
             NotaModel.DataCriacao = DateTime.Now;
             ReturnNota = await _notaService.AddNotaAsync(NotaModel);
             NotaModel = new();
+            _navigation.NavigateTo("notas");
         }
     }
 
