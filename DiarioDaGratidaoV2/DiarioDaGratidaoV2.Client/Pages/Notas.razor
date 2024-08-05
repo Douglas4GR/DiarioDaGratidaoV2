@@ -5,40 +5,42 @@
     <div class="row">
         <div class="col-lg-10">
             <!-- barra de busca -->
-            <input type="text" class="form-control" placeholder="Pesquisar por título" @oninput="@(e => PesquisaNota(e.Value.ToString()))" />
+            <input type="text" class="form-control" placeholder="Pesquisar por título" @oninput="@(e => FiltrarNotas(e.Value.ToString()))" />
         </div>
         <div class="col-md-10">
             <div class="card">
-                @if (NotasList.Count > 0)
+                @if (NotasF.Count > 0)
                 {
                     <div class="card-header">
                         Lista de Notas
                     </div>
                     <div class="card-body">
-                        <table class="table table-striped">
-                            <thead>
-                                <tr>
-                                    <th>Conteudo</th>
-                                    <th>DataCriacao</th>
-                                    <th></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach (var nota in NotasFiltradas)
-                                {
+                        <div style="max-height: 400px; overflow-y: auto;">
+                            <table class="table table-striped">
+                                <thead>
                                     <tr>
-                                        <td>@nota.Conteudo</td>
-                                        <td>@nota.DataCriacao</td>
-                                        <td>
-                                            <div class="hstack gap-2">
-                                                <button class="btn  btn-info" @onclick="()=>Edit(nota)"> Edita</button>
-                                                <button class="btn  btn-danger" @onclick="() => Delete(nota.Id)"> Deleta</button>
-                                            </div>
-                                        </td>
+                                        <th>Conteudo</th>
+                                        <th>DataCriacao</th>
+                                        <th></th>
                                     </tr>
-                                }
-                            </tbody>
-                        </table>
+                                </thead>
+                                <tbody>
+                                    @foreach (var nota in NotasF)
+                                    {
+                                        <tr>
+                                            <td>@nota.Conteudo</td>
+                                            <td>@nota.DataCriacao</td>
+                                            <td>
+                                                <div class="hstack gap-2">
+                                                    <button class="btn btn-info" @onclick="()=>EditarNota(nota)">Edita</button>
+                                                    <button class="btn btn-danger" @onclick="() => DeletarNotaAsync(nota.Id)">Deleta</button>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 }
                 else
@@ -59,63 +61,50 @@
         </div>
     </div>
 </div>
-
 @code {
-    private List<Nota> NotasList { get; set; } = new();
-    private List<Nota> NotasFiltradas { get; set; } = new();
+    private List<Nota> NotasF { get; set; } = new();
+    private List<Nota> NotasList { get; set; } = new(); // Lista completa de notas
 
     protected override async Task OnInitializedAsync()
     {
-        await CarregaNotas();
+        await CarregarNotasAsync();
     }
 
-    private async Task CarregaNotas()
+    private async Task CarregarNotasAsync()
     {
         var notas = await _notaService.GetAllNotasAsync();
-
-        NotasList?.Clear();
-        NotasFiltradas?.Clear();
-
-        if (NotasList is null) return;
-
-        foreach (var nota in notas)
-        {
-            NotasList.Add(nota);
-            NotasFiltradas.Add(nota);
-        }
+        NotasList = notas.OrderByDescending(n => n.DataCriacao).ToList();
+        NotasF = NotasList.ToList();
     }
 
-
-    //pesquisar
-    private void PesquisaNota(string cont)
+    private void FiltrarNotas(string conteudo)
     {
-        if (string.IsNullOrEmpty(cont))
+        if (string.IsNullOrEmpty(conteudo))
         {
-            NotasFiltradas = NotasList.ToList();
+            NotasF = NotasList.ToList();
         }
         else
         {
-            NotasFiltradas = NotasList.Where(x => x.Conteudo.Contains(cont, StringComparison.OrdinalIgnoreCase)).ToList();
+            NotasF = NotasList
+                .Where(x => x.Conteudo.Contains(conteudo, StringComparison.OrdinalIgnoreCase))
+                .OrderByDescending(x => x.DataCriacao)
+                .ToList();
         }
     }
 
-
-    //incluir
     private void NavigateToAddNotaPage()
     {
         _navigation.NavigateTo("manutencaonota");
     }
 
-    //editar
-    private void Edit(Nota model)
+    private void EditarNota(Nota nota)
     {
-        _navigation.NavigateTo($"manutencaonota/{model.Id}");
+        _navigation.NavigateTo($"manutencaonota/{nota.Id}");
     }
 
-    //deletar
-    private async Task Delete(int id)
+    private async Task DeletarNotaAsync(int id)
     {
-        var nota = await _notaService.DeleteNotaAsync(id);
-        await CarregaNotas();
+        await _notaService.DeleteNotaAsync(id);
+        await CarregarNotasAsync();
     }
 }
