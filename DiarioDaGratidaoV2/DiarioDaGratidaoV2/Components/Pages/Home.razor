@@ -1,24 +1,17 @@
 ﻿@page "/"
 
 <PageTitle>Home</PageTitle>
-<div class="container-fluid">
+<main class="container-fluid">
     <div class="row justify-content-center">
-        <div class="col-lg-6 col-sm-12">
-            <div class="card">
-                <div class="card-header">
-                    <h1>Diário da Gratidão</h1>
-                </div>
-                <div class="card-body">
-                    <p>Seja bem-vindo ao Diário da Gratidão. Aqui você pode registrar suas gratidões diárias.</p>
-                </div>
-                <img src="@ImageUrl" alt="Imagem carregada" class="img-fluid" />
-            </div>
-            <div class="card">
+        <div class="col-lg-6 col-12">
+            <div class="card m-3">
                 <div class="card-body">
                     @if (NotaSorteada != null)
                     {
-                        <p>@NotaSorteada.Conteudo</p>
-                        <p>@NotaSorteada.DataCriacao.ToString("dd/MM/yyyy")</p>
+                        <h1>@NotaSorteada.Conteudo</h1>
+                        <div class="text-end">
+                            <p>@NotaSorteada.DataCriacao.ToString("dd/MM/yyyy")</p>
+                        </div>
                     }
                     else
                     {
@@ -26,9 +19,15 @@
                     }
                 </div>
             </div>
+            <div class="card m-3">
+                <div class="card-body">
+                    <p>Seja bem-vindo ao Diário da Gratidão. Aqui você pode registrar suas gratidões diárias.</p>
+                </div>
+                <img src="@ImageUrl" alt="Imagem carregada" class="img-fluid" />
+            </div>
         </div>
     </div>
-</div>
+</main>
 
 @code {
     private List<Nota> NotasList { get; set; } = new();

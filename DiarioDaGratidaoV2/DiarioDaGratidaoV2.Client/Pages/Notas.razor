@@ -3,18 +3,14 @@
 
 <div class="container">
     <div class="row">
-        <div class="col-lg-10">
-            <!-- barra de busca -->
-            <input type="text" class="form-control" placeholder="Pesquisar por título" @oninput="@(e => FiltrarNotas(e.Value.ToString()))" />
-        </div>
         <div class="col-md-10">
             <div class="card">
                 @if (NotasF.Count > 0)
                 {
-                    <div class="card-header">
-                        Lista de Notas
-                    </div>
                     <div class="card-body">
+                        <div class="m-2">
+                            <input type="text" class="form-control" placeholder="Pesquisar por título" @oninput="@(e => FiltrarNotas(e.Value.ToString()))" />
+                        </div>
                         <div style="max-height: 400px; overflow-y: auto;">
                             <table class="table table-striped">
                                 <thead>
@@ -29,7 +25,7 @@
                                     {
                                         <tr>
                                             <td>@nota.Conteudo</td>
-                                            <td>@nota.DataCriacao</td>
+                                            <td>@nota.DataCriacao.ToString("dd/MM/yyyy")</td>
                                             <td>
                                                 <div class="hstack gap-2">
                                                     <button class="btn btn-info" @onclick="()=>EditarNota(nota)">Edita</button>
@@ -41,22 +37,15 @@
                                 </tbody>
                             </table>
                         </div>
+                        <div class="m-2">
+                            <button class="btn btn-primary float-end" onclick="NavigateToAddNotaPage">Nova Nota</button>
+                        </div>
                     </div>
                 }
                 else
                 {
                     <div class="alert alert-info"> Nenhuma nota disponível </div>
                 }
-            </div>
-        </div>
-        <div class="col-12 mt-3">
-            <div class="card">
-                <div class="card-header">
-                    <button class="btn btn-primary float-end"
-                            @onclick="NavigateToAddNotaPage">
-                        Nova Nota
-                    </button>
-                </div>
             </div>
         </div>
     </div>
