@@ -4,7 +4,7 @@
 <main class="container-fluid">
     <div class="row justify-content-center">
         <div class="col-lg-6 col-12">
-            <div class="card m-3">
+            <div class="card m-3" style="background-color:@CardColor;">
                 <div class="card-body">
                     @if (NotaSorteada != null)
                     {
@@ -33,11 +33,13 @@
     private List<Nota> NotasList { get; set; } = new();
     private Nota NotaSorteada { get; set; }
     private string ImageUrl { get; set; } = "";
+    private string CardColor { get; set; } = "";
 
     protected override async Task OnInitializedAsync()
     {
         await CarregaNotas();
         SortearNota();
+        SortearCorDoCard();
         StateHasChanged(); // Força a atualização do estado
     }
 
@@ -61,5 +63,28 @@
             int index = random.Next(NotasList.Count);
             NotaSorteada = NotasList[index];
         }
+    }
+
+    private void SortearCorDoCard()
+    {
+        var palette = GetSelectedPalette(); // Implementar a lógica para obter a paleta selecionada
+        if (palette != null && palette.Colors.Count > 0)
+        {
+            var random = new Random();
+            int index = random.Next(palette.Colors.Count);
+            CardColor = palette.Colors[index];
+        }
+    }
+
+    private Palette GetSelectedPalette()
+    {
+        // Implementar a lógica para obter a paleta de cores selecionada (ex.: do local storage, sessão, ou banco de dados)
+        // ...
+        return new Palette { Colors = new List<string> { "#FF5733", "#FFBD33", "#FF33F6" } }; // Exemplo de retorno
+    }
+
+    private class Palette
+    {
+        public List<string> Colors { get; set; }
     }
 }
