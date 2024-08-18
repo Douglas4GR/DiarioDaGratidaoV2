@@ -1,9 +1,9 @@
-﻿using DiarioDaGratidaoV2.Shared.Entidades;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DiarioDaGratidaoV2.Shared.Entidades;
 
 namespace DiarioDaGratidaoV2.Shared.Interfaces
 {
@@ -14,6 +14,5 @@ namespace DiarioDaGratidaoV2.Shared.Interfaces
         Task<Cor>AddCorAsync(Cor cor);
         Task<Cor> UpdateCorAsync(Cor cor);
         Task<Cor> DeleteCorAsync(int id);
-
     }
 }

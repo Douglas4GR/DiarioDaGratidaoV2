@@ -28,8 +28,4 @@
     <_ContentIncludedByDefault Remove="Pages\Cores.razor" />
   </ItemGroup>
 
-  <ItemGroup>
-    <None Include="Pages\Cores.razor" />
-  </ItemGroup>
-
 </Project>

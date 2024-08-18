@@ -1,0 +1,99 @@
+﻿@page "/cor"
+@rendermode InteractiveServer
+@inject ICorRepository _corService
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-10">
+            <div class="card">
+                @if (CoresFiltradas.Count > 0)
+                {
+                    <div class="card-body">
+                        <div class="m-2">
+                            <input type="text" class="form-control" placeholder="Pesquisar por título" @oninput="@(e => FiltrarCors(e.Value.ToString()))" />
+                        </div>
+                        <div style="max-height: 400px; overflow-y: auto;">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Nome</th>
+                                        <th>Hexadecimal</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var cor in CoresFiltradas)
+                                    {
+                                        <tr>
+                                            <td>@cor.Nome</td>
+                                            <td>@cor.Hexa</td>
+                                            <td>
+                                                <div class="hstack gap-2">
+                                                    <button class="btn btn-info" @onclick="()=>EditarCor(cor)">Edita</button>
+                                                    <button class="btn btn-danger" @onclick="() => DeletarCorAsync(cor.Id)">Deleta</button>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="m-2">
+                            <button class="btn btn-primary float-end" onclick="NavigateToAddCorPage">Nova Cor</button>
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    <div class="alert alert-info"> Nenhuma cor disponível </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+@code {
+    private List<Cor> CoresFiltradas { get; set; } = new();
+    private List<Cor> CoresList { get; set; } = new(); // Lista completa de cors
+
+    protected override async Task OnInitializedAsync()
+    {
+        await CarregarCorsAsync();
+    }
+
+    private async Task CarregarCorsAsync()
+    {
+        var cors = await _corService.GetAllCoresAsync();
+        CoresFiltradas = CoresList.ToList();
+    }
+
+    private void FiltrarCors(string nome)
+    {
+        if (string.IsNullOrEmpty(nome))
+        {
+            CoresFiltradas = CoresList.ToList();
+        }
+        else
+        {
+            CoresFiltradas = CoresList
+                .Where(x => x.Nome.Contains(nome, StringComparison.OrdinalIgnoreCase))
+                .ToList();
+        }
+    }
+
+    private void NavigateToAddCorPage()
+    {
+        _navigation.NavigateTo("manutencaocor");
+    }
+
+    private void EditarCor(Cor cor)
+    {
+        _navigation.NavigateTo($"manutencaocor/{cor.Id}");
+    }
+
+    private async Task DeletarCorAsync(int id)
+    {
+        await _corService.DeleteCorAsync(id);
+        await CarregarCorsAsync();
+    }
+}

@@ -11,6 +11,7 @@ namespace DiarioDaGratidaoV2.Shared.Entidades
     {
         public int Id { get; set; }
         [Required]
+        public string Nome { get; set; } = string.Empty;
 
         public string Hexa { get; set; } = string.Empty;
     }

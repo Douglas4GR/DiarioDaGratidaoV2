@@ -1,61 +1,9 @@
 ﻿@page "/cores"
-@rendermode InteractiveAuto
+@rendermode InteractiveServer
 
-<PageTitle>Select Color Palette</PageTitle>
-
-<main class="container-fluid">
-    <h2>Escolha uma Paleta de Cores</h2>
-    <div class="row">
-        @foreach (var palette in Palettes)
-        {
-            <div class="col-lg-4 col-md-6 col-12 mb-3">
-                <div class="card" style="cursor:pointer;" @onclick="() => SelectPalette(palette)">
-                    <div class="card-body">
-                        <div style="display: flex; justify-content: space-around;">
-                            @foreach (var color in palette.Colors)
-                            {
-                                <div style="width: 50px; height: 50px; background-color:@color;"></div>
-                            }
-                        </div>
-                    </div>
-                </div>
-            </div>
-        }
-    </div>
-</main>
+<a>
+    asdadaf
+</a>
 
 @code {
-    private List<Palette> Palettes { get; set; } = new();
-    [Inject] private NavigationManager Navigation { get; set; }
-
-    protected override void OnInitialized()
-    {
-        Palettes = GetPalettes();
-    }
-
-    private void SelectPalette(Palette selectedPalette)
-    {
-        // Salvar a paleta selecionada (ex.: no local storage, sessão, ou banco de dados)
-        // Aqui você pode implementar a lógica para armazenar a paleta selecionada
-        // ...
-
-        // Navegar de volta para a página inicial
-        Navigation.NavigateTo("/");
-    }
-
-    private List<Palette> GetPalettes()
-    {
-        return new List<Palette>
-        {
-            new Palette { Name = "Palette 1", Colors = new List<string> { "#FF5733", "#FFBD33", "#FF33F6" }},
-            new Palette { Name = "Palette 2", Colors = new List<string> { "#33FF57", "#33FFBD", "#5733FF" }},
-            new Palette { Name = "Palette 3", Colors = new List<string> { "#5733FF", "#33BDFF", "#33F6FF" }},
-        };
-    }
-
-    private class Palette
-    {
-        public string Name { get; set; }
-        public List<string> Colors { get; set; }
-    }
 }
