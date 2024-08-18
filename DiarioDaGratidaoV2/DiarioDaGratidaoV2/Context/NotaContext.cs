@@ -10,5 +10,7 @@ namespace DiarioDaGratidaoV2.Context
         }
 
         public DbSet<Nota> Notas { get; set; }
+
+        public DbSet<Cor> Cores { get; set; }
     }    
 }
