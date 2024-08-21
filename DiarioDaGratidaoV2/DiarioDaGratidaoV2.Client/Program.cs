@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.Services.AddScoped<INotaRepository, NotaService>();
+builder.Services.AddScoped<ICorRepository, CorService>();
 
 builder.Services.AddScoped(http => new HttpClient
 {

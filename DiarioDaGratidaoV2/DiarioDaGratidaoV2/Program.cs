@@ -14,8 +14,8 @@ builder.Services.AddRazorComponents()
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<NotaContext>(options => options.UseSqlServer(connectionString));
 builder.Services.AddScoped<INotaRepository, NotaRepository>();
+builder.Services.AddScoped<ICorRepository, CorRepository>();
 
-builder.Services.AddScoped<INotaRepository, NotaRepository>();
 builder.Services.AddScoped(http => new HttpClient
 {
     BaseAddress = new Uri(builder.Configuration.GetSection("BaseUrl").Value!)

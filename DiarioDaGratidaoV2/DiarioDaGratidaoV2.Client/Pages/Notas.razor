@@ -5,6 +5,11 @@
 
 <div class="container">
     <div class="row">
+        <div class="col-md-2">
+            <div class="m-2">
+                <button class="btn btn-primary float-end" @onclick="NavigateToAddNotaPage">Nova Nota</button>
+            </div>
+        </div>
         <div class="col-md-10">
             <div class="card">
                 @if (NotasF.Count > 0)
@@ -38,9 +43,6 @@
                                     }
                                 </tbody>
                             </table>
-                        </div>
-                        <div class="m-2">
-                            <button class="btn btn-primary float-end" onclick="NavigateToAddNotaPage">Nova Nota</button>
                         </div>
                     </div>
                 }

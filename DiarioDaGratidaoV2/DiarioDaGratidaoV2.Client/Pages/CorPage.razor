@@ -1,17 +1,22 @@
 ﻿@page "/cor"
 @rendermode InteractiveServer
 @inject ICorRepository _corService
-
+@inject NavigationManager _navigation
 
 <div class="container">
     <div class="row">
+        <div class="col-md-2">
+            <div class="m-2">
+                <button class="btn btn-primary float-end" @onclick="NavigateToAddCorPage">Nova Cor</button>
+            </div>
+        </div>
         <div class="col-md-10">
             <div class="card">
                 @if (CoresFiltradas.Count > 0)
                 {
                     <div class="card-body">
                         <div class="m-2">
-                            <input type="text" class="form-control" placeholder="Pesquisar por título" @oninput="@(e => FiltrarCors(e.Value.ToString()))" />
+                            <input type="text" class="form-control" placeholder="Pesquisar por título" @oninput="@(e => FiltrarCores(e.Value.ToString()))" />
                         </div>
                         <div style="max-height: 400px; overflow-y: auto;">
                             <table class="table table-striped">
@@ -19,6 +24,7 @@
                                     <tr>
                                         <th>Nome</th>
                                         <th>Hexadecimal</th>
+                                        <th>Visualização</th> <!-- Nova coluna -->
                                         <th></th>
                                     </tr>
                                 </thead>
@@ -29,9 +35,13 @@
                                             <td>@cor.Nome</td>
                                             <td>@cor.Hexa</td>
                                             <td>
+                                                <div style="width: 30px; height: 30px; background-color: @cor.Hexa; border: 1px solid #000;">
+                                                </div>
+                                            </td>
+                                            <td>
                                                 <div class="hstack gap-2">
-                                                    <button class="btn btn-info" @onclick="()=>EditarCor(cor)">Edita</button>
-                                                    <button class="btn btn-danger" @onclick="() => DeletarCorAsync(cor.Id)">Deleta</button>
+                                                    <button class="btn btn-info" @onclick="()=>EditarCor(cor)">Editar</button>
+                                                    <button class="btn btn-danger" @onclick="() => DeletarCorAsync(cor.Id)">Deletar</button>
                                                 </div>
                                             </td>
                                         </tr>
@@ -39,35 +49,34 @@
                                 </tbody>
                             </table>
                         </div>
-                        <div class="m-2">
-                            <button class="btn btn-primary float-end" onclick="NavigateToAddCorPage">Nova Cor</button>
-                        </div>
                     </div>
                 }
                 else
                 {
-                    <div class="alert alert-info"> Nenhuma cor disponível </div>
+                    <div class="alert alert-info">Nenhuma cor disponível</div>
                 }
             </div>
         </div>
     </div>
 </div>
+
 @code {
     private List<Cor> CoresFiltradas { get; set; } = new();
-    private List<Cor> CoresList { get; set; } = new(); // Lista completa de cors
+    private List<Cor> CoresList { get; set; } = new(); // Lista completa de cores
 
     protected override async Task OnInitializedAsync()
     {
-        await CarregarCorsAsync();
+        await CarregarCoresAsync();
     }
 
-    private async Task CarregarCorsAsync()
+    private async Task CarregarCoresAsync()
     {
-        var cors = await _corService.GetAllCoresAsync();
-        CoresFiltradas = CoresList.ToList();
+        var cores = await _corService.GetAllCoresAsync();
+        CoresList = cores.ToList();
+        CoresFiltradas = CoresList.ToList(); // Inicialmente, CoresFiltradas contém todas as cores
     }
 
-    private void FiltrarCors(string nome)
+    private void FiltrarCores(string nome)
     {
         if (string.IsNullOrEmpty(nome))
         {
@@ -94,6 +103,6 @@
     private async Task DeletarCorAsync(int id)
     {
         await _corService.DeleteCorAsync(id);
-        await CarregarCorsAsync();
+        await CarregarCoresAsync();
     }
 }
