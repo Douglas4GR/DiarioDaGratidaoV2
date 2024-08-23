@@ -1,46 +1,50 @@
 ﻿@page "/"
 @inject INotaRepository _notaService
+@inject ICorRepository _corService
 
 <PageTitle>Home</PageTitle>
 <main class="container-fluid">
     <div class="row justify-content-center">
         <div class="col-lg-6 col-12">
-            <div class="card m-3" style="background-color:@CardColor;">
-                <div class="card-body">
                     @if (NotaSorteada != null)
                     {
+                <div class="card m-3" style="background-color:@CardColor;">
+                    <div class="card-body">
                         <h1>@NotaSorteada.Conteudo</h1>
                         <div class="text-end">
                             <p>@NotaSorteada.DataCriacao.ToString("dd/MM/yyyy")</p>
                         </div>
+                    </div>
+                </div>
                     }
                     else
                     {
                         <p>Nenhuma nota sorteada ainda.</p>
                     }
-                </div>
-            </div>
             <div class="card m-3">
                 <div class="card-body">
                     <p>Seja bem-vindo ao Diário da Gratidão. Aqui você pode registrar suas gratidões diárias.</p>
                 </div>
-                <img src="@ImageUrl" alt="Imagem carregada" class="img-fluid" />
             </div>
         </div>
     </div>
 </main>
 
 @code {
+    //notas
     private List<Nota> NotasList { get; set; } = new();
     private Nota NotaSorteada { get; set; }
-    private string ImageUrl { get; set; } = "";
+    //cores
     private string CardColor { get; set; } = "";
+    private List<Cor> CoresList { get; set; } = new();
+    private Cor CorSorteada { get; set; } = new();
 
     protected override async Task OnInitializedAsync()
     {
         await CarregaNotas();
+        await CarregaCores();
         SortearNota();
-        SortearCorDoCard();
+        SortearCor();
         StateHasChanged(); // Força a atualização do estado
     }
 
@@ -66,26 +70,26 @@
         }
     }
 
-    private void SortearCorDoCard()
+    private async Task CarregaCores()
     {
-        var palette = GetSelectedPalette(); // Implementar a lógica para obter a paleta selecionada
-        if (palette != null && palette.Colors.Count > 0)
+        var cores = await _corService.GetAllCoresAsync();
+
+        CoresList?.Clear();
+
+        if (CoresList == null) return;
+
+        foreach (var cor in cores)
+            CoresList.Add(cor);
+    }
+
+    private void SortearCor()
+    {
+        if (CoresList != null && CoresList.Count > 0)
         {
             var random = new Random();
-            int index = random.Next(palette.Colors.Count);
-            CardColor = palette.Colors[index];
+            int index = random.Next(CoresList.Count);
+            CorSorteada = CoresList[index];
+            CardColor = CorSorteada.Hexa;
         }
-    }
-
-    private Palette GetSelectedPalette()
-    {
-        // Implementar a lógica para obter a paleta de cores selecionada (ex.: do local storage, sessão, ou banco de dados)
-        // ...
-        return new Palette { Colors = new List<string> { "#FF5733", "#FFBD33", "#FF33F6" } }; // Exemplo de retorno
-    }
-
-    private class Palette
-    {
-        public List<string> Colors { get; set; }
     }
 }
