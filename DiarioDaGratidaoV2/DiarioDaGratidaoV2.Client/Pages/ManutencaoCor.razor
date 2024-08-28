@@ -2,7 +2,7 @@
 @page "/manutencaocor/{Id:int}"
 @rendermode InteractiveAuto
 @inject ICorRepository _corService
-
+@inject NavigationManager _navigation
 
 <div class="container">
     <div class="row">
@@ -11,7 +11,7 @@
                 <div class="card-header">Manutenção</div>
                 <div class="card-body">
                     <EditForm Model="CorModel" OnValidSubmit="HandleSalvar" FormName="CorForm">
-                        <DataAncortionsValidator />
+                        <DataAnnotationsValidator />
                         <ValidationSummary />
                         <div class="form-group">
                             <label class="form-label">Nome</label>
@@ -19,8 +19,8 @@
                             <ValidationMessage For="()=>CorModel.Nome"></ValidationMessage>
                         </div>
                         <div class="form-group">
-                            <label class="form-label">Hexadecimal</label>
-                            <InputText @bind-Value="CorModel.Hexa" class="form-control"></InputText>
+                            <label class="form-label">Escolha uma cor</label>
+                            <input type="color" @bind="CorModel.Hexa" class="form-control" />
                             <ValidationMessage For="()=>CorModel.Hexa"></ValidationMessage>
                         </div>
 
@@ -33,7 +33,6 @@
 </div>
 
 @code {
-
     public Cor CorModel { get; set; } = new();
     [Parameter] public int Id { get; set; }
 
