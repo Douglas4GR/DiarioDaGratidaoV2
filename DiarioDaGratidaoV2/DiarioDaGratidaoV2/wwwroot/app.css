@@ -2,6 +2,7 @@
 
 html, body {
     font-family: 'Poppins', sans-serif;
+    background-color: #FCFAF4;
 }
 
 /* fazendo o link do "sobre o autor" */
@@ -24,6 +25,7 @@ html, body {
   box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
 }
 
+/* conteudo de todas as paginas */
 .content {
     padding-top: 1.1rem;
 }
