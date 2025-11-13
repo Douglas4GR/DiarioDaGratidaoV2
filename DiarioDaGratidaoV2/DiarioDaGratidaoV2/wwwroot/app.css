@@ -1,10 +1,18 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
+
 html, body {
-    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-family: 'Poppins', sans-serif;
 }
 
-a, .btn-link {
-    color: #006bb7;
+/* fazendo o link do "sobre o autor" */
+.top-row a {
+    transition: color 0.3s ease, transform 0.2s ease;
 }
+
+    .top-row a:hover {
+        color: #0d6efd; /* cor do link ao passar o mouse */
+        transform: translateY(-1px);
+    }
 
 .btn-primary {
     color: #fff;
