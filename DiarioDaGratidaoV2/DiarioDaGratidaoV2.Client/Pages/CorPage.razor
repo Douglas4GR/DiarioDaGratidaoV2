@@ -4,59 +4,56 @@
 @inject NavigationManager _navigation
 
 <div class="container">
-    <div class="row">
-        <div class="col-md-2">
-            <div class="m-2">
-                <button class="bton bton-create" @onclick="NavigateToAddCorPage">Nova Cor</button>
-            </div>
+    <div class="row mt-2">
+        <div class="col-4 col-lg-auto">
+            <button class="bton bton-create" @onclick="NavigateToAddCorPage">Nova Cor</button>
         </div>
-        <div class="col-md-10">
-            <div class="card">
-                @if (CoresFiltradas.Count > 0)
-                {
-                    <div class="card-body">
-                        <div class="m-2">
-                            <input type="text" class="form-control" placeholder="Pesquisar por título" @oninput="@(e => FiltrarCores(e.Value.ToString()))" />
-                        </div>
-                        <div style="max-height: 400px; overflow-y: auto;">
-                            <table class="table table-striped">
-                                <thead>
-                                    <tr>
-                                        <th>Nome</th>
-                                        <th>Hexadecimal</th>
-                                        <th>Visualização</th> <!-- Nova coluna -->
-                                        <th></th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach (var cor in CoresFiltradas)
-                                    {
-                                        <tr>
-                                            <td>@cor.Nome</td>
-                                            <td>@cor.Hexa</td>
-                                            <td>
-                                                <div style="width: 30px; height: 30px; background-color: @cor.Hexa; border: 1px solid #000;">
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="hstack gap-2">
-                                                    <button class="bton bton-edit" @onclick="()=>EditarCor(cor)">Editar</button>
-                                                    <button class="bton bton-delete" @onclick="() => DeletarCorAsync(cor.Id)">Deletar</button>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    }
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                }
-                else
-                {
-                    <div class="alert alert-info">Nenhuma cor disponível</div>
-                }
+        @if (CoresFiltradas.Count > 0)
+        {
+            <div class="col-8">
+                <div class="search-container">
+                    <input type="text" class="search-input" placeholder="Pesquisar por nome..." @oninput="@(e => FiltrarCores(e.Value.ToString()))" />
+                </div>
             </div>
-        </div>
+            <div class="col-12 mt-4">
+                <div style="max-height: 400px; overflow-y: auto;">
+                    <table class="styled-table">
+                        <thead>
+                            <tr>
+                                <th>Nome:</th>
+                                <th>Hexadecimal:</th>
+                                <th>Visualização:</th> <!-- Nova coluna -->
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var cor in CoresFiltradas)
+                            {
+                                <tr>
+                                    <td>@cor.Nome</td>
+                                    <td>@cor.Hexa</td>
+                                    <td>
+                                        <div style="width: 30px; height: 30px; background-color: @cor.Hexa; border: 1px solid #000;">
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="hstack gap-2">
+                                            <button class="bton bton-edit" @onclick="() => EditarCor(cor)"><i class="bi bi-pencil"></i></button>
+                                            <button class="bton bton-delete" @onclick="() => DeletarCorAsync(cor.Id)"><i class="bi bi-trash3"></i></button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+        }
+        else
+        {
+            <div class="alert alert-info">Nenhuma cor disponível</div>
+        }
     </div>
 </div>
 

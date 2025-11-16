@@ -1,0 +1,73 @@
+﻿/* ===== Barra de Busca ===== */
+.search-container {
+    width: 100%;
+    max-width: 450px;
+    margin-bottom: 12px;
+}
+
+.search-input {
+    width: 100%;
+    padding: 10px 14px;
+    font-size: 16px;
+    border-radius: 8px;
+    border: none;
+    outline: none;
+    background: rgba(255, 255, 255, 0.25);
+    color: #000000;
+    backdrop-filter: blur(6px);
+    transition: 0.25s;
+}
+
+    .search-input::placeholder {
+        color: #7d6a50;
+    }
+
+    .search-input:focus {
+        background: rgba(255, 255, 255, 0.15)
+    }
+
+
+/* ===== Tabela ===== */
+.styled-table {
+    width: 100%;
+    border-collapse: collapse;
+    overflow: hidden;
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(6px);
+    color: #000000;
+    border-radius: 5px:
+}
+
+    .styled-table thead {
+        background: rgb(216, 204, 173);
+    }
+
+        .styled-table thead th {
+            font-weight: normal;
+        }
+
+    .styled-table th, .styled-table td {
+        padding: 12px 14px;
+        text-align: left;
+    }
+
+    .styled-table tbody tr {
+        border-bottom: 1px solid #8f8372;
+        transition: 0.2s ease;
+    }
+
+        .styled-table tbody tr:nth-child(even) {
+            background: rgba(242, 232, 207, 1);
+        }
+
+        .styled-table tbody tr:hover {
+            background: rgba(242, 232, 207, 0.3);
+        }
+
+/* Responsividade */
+@media (max-width: 600px) {
+    .styled-table th, .styled-table td {
+        padding: 10px;
+        font-size: 14px;
+    }
+}

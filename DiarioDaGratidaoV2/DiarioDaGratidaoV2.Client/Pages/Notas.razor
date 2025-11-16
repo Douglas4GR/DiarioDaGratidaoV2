@@ -4,54 +4,51 @@
 
 
 <div class="container">
-    <div class="row">
-        <div class="col-md-2">
-            <div class="m-2">
-                <button class="bton bton-create" @onclick="NavigateToAddNotaPage">Nova Nota</button>
-            </div>
+    <div class="row mt-2">
+        <div class="col-4 col-lg-auto">
+            <button class="bton bton-create" @onclick="NavigateToAddNotaPage">Nova Nota</button>
         </div>
-        <div class="col-md-10">
-            <div class="card">
-                @if (NotasF.Count > 0)
-                {
-                    <div class="card-body">
-                        <div class="m-2">
-                            <input type="text" class="form-control" placeholder="Pesquisar por título" @oninput="@(e => FiltrarNotas(e.Value.ToString()))" />
-                        </div>
-                        <div style="max-height: 400px; overflow-y: auto;">
-                            <table class="table table-striped">
-                                <thead>
-                                    <tr>
-                                        <th>Conteudo</th>
-                                        <th>DataCriacao</th>
-                                        <th></th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach (var nota in NotasF)
-                                    {
-                                        <tr>
-                                            <td>@nota.Conteudo</td>
-                                            <td>@nota.DataCriacao.ToString("dd/MM/yyyy")</td>
-                                            <td>
-                                                <div class="hstack gap-2">
-                                                    <button class="bton bton-edit" @onclick="() => EditarNota(nota)">Editar</button>
-                                                    <button class="bton bton-delete" @onclick="() => DeletarNotaAsync(nota.Id)">Deletar</button>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    }
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                }
-                else
-                {
-                    <div class="alert alert-info"> Nenhuma nota disponível </div>
-                }
+        @if (NotasF.Count > 0)
+        {
+            <div class="col-8">
+                <div class="search-container">
+                    <input type="text" class="search-input" placeholder="Pesquisar por conteúdo..." @oninput="@(e => FiltrarNotas(e.Value.ToString()))" />
+                </div>
             </div>
-        </div>
+            <div class="col-12 mt-4">
+                <div style="max-height: 400px; overflow-y: auto;">
+                    <table class="styled-table">
+                        <thead>
+                            <tr>
+                                <th>Conteúdo:</th>
+                                <th>Data de Criação:</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var nota in NotasF)
+                            {
+                                <tr>
+                                    <td>@nota.Conteudo</td>
+                                    <td>@nota.DataCriacao.ToString("dd/MM/yyyy")</td>
+                                    <td>
+                                        <div class="hstack gap-2">
+                                            <button class="bton bton-edit" @onclick="() => EditarNota(nota)"><i class="bi bi-pencil"></i></button>
+                                            <button class="bton bton-delete" @onclick="() => DeletarNotaAsync(nota.Id)"><i class="bi bi-trash3"></i></button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+        }
+        else
+        {
+            <div class="alert alert-info"> Nenhuma nota disponível </div>
+        }
     </div>
 </div>
 @code {

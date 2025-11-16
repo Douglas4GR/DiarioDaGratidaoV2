@@ -7,6 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="wwwroot\table.razor" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\..\DiarioDaGratidaoV2Shared\DiarioDaGratidaoV2.Shared.csproj" />
     <ProjectReference Include="..\DiarioDaGratidaoV2.Client\DiarioDaGratidaoV2.Client.csproj" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="8.0.6" />

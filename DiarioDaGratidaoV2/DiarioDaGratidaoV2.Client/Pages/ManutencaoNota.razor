@@ -8,18 +8,19 @@
     <div class="row">
         <div class="col-md-10">
             <div class="card">
-                <div class="card-header">Manutenção</div>
+                <div class="card-header">Manutenção de Nota</div>
                 <div class="card-body">
                     <EditForm Model="NotaModel" OnValidSubmit="HandleSalvar" FormName="Nota">
                         <DataAnnotationsValidator />
                         <ValidationSummary />
                         <div class="form-group">
-                            <label class="form-label">Conteudo</label>
+                            <label class="form-label">Conteúdo:</label>
                             <InputText @bind-Value="NotaModel.Conteudo" class="form-control"></InputText>
                             <ValidationMessage For="()=>NotaModel.Conteudo"></ValidationMessage>
                         </div>
 
-                        <button type="submit" class="btn btn-primary mt-2"> Salvar</button>
+                        <button type="submit" class="bton bton-create mt-2"> Salvar</button>
+                        <a href="Notas" class="bton bton-delete">Cancelar</a>
                     </EditForm>
                 </div>
             </div>

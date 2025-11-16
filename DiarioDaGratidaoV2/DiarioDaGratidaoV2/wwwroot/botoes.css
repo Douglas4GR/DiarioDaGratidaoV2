@@ -7,10 +7,16 @@
     border: none;
     cursor: pointer;
     transition: 0.25s ease;
-    color: #fff;
+    background: none;
     backdrop-filter: blur(4px);
     margin: 6px;
+    text-decoration: none;
+    color: #000000;
 }
+    .bton:hover {
+        text-decoration: none;
+        transform: scale(1.2);
+    }
 
 /* Responsividade */
 .button-container {
@@ -21,27 +27,27 @@
 
 /* Botão Criar (Azul) */
 .bton-create {
-    background: rgba(0, 122, 255, 0.4);
+    background: rgba(106, 153, 78, 0.6);
 }
 
     .bton-create:hover {
-        background: rgba(0, 122, 255, 0.75);
+        background: rgba(106, 153, 78, 0.8);
     }
 
 /* Botão Editar (Amarelo/laranja) */
 .bton-edit {
-    background: rgba(255, 170, 0, 0.4);
+    color: rgba(255, 170, 0, 0.7);
 }
 
     .bton-edit:hover {
-        background: rgba(255, 170, 0, 0.75);
+        color: rgba(255, 170, 0, 1);
     }
 
 /* Botão Deletar (Vermelho) */
 .bton-delete {
-    background: rgba(255, 59, 48, 0.4);
+    color: rgba(255, 59, 48, 0.7);
 }
 
     .bton-delete:hover {
-        background: rgba(255, 59, 48, 0.75);
+        color: rgba(255, 59, 48, 1);
     }
