@@ -7,7 +7,7 @@
     <div class="row">
         <div class="col-md-2">
             <div class="m-2">
-                <button class="btn btn-primary float-end" @onclick="NavigateToAddCorPage">Nova Cor</button>
+                <button class="bton bton-create" @onclick="NavigateToAddCorPage">Nova Cor</button>
             </div>
         </div>
         <div class="col-md-10">
@@ -40,8 +40,8 @@
                                             </td>
                                             <td>
                                                 <div class="hstack gap-2">
-                                                    <button class="btn btn-info" @onclick="()=>EditarCor(cor)">Editar</button>
-                                                    <button class="btn btn-danger" @onclick="() => DeletarCorAsync(cor.Id)">Deletar</button>
+                                                    <button class="bton bton-edit" @onclick="()=>EditarCor(cor)">Editar</button>
+                                                    <button class="bton bton-delete" @onclick="() => DeletarCorAsync(cor.Id)">Deletar</button>
                                                 </div>
                                             </td>
                                         </tr>

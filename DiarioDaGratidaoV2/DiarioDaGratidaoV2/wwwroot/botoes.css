@@ -1,0 +1,47 @@
+﻿/* Classe base */
+.bton {
+    padding: 12px 22px;
+    font-size: 16px;
+    font-weight: 500;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    transition: 0.25s ease;
+    color: #fff;
+    backdrop-filter: blur(4px);
+    margin: 6px;
+}
+
+/* Responsividade */
+.button-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+/* Botão Criar (Azul) */
+.bton-create {
+    background: rgba(0, 122, 255, 0.4);
+}
+
+    .bton-create:hover {
+        background: rgba(0, 122, 255, 0.75);
+    }
+
+/* Botão Editar (Amarelo/laranja) */
+.bton-edit {
+    background: rgba(255, 170, 0, 0.4);
+}
+
+    .bton-edit:hover {
+        background: rgba(255, 170, 0, 0.75);
+    }
+
+/* Botão Deletar (Vermelho) */
+.bton-delete {
+    background: rgba(255, 59, 48, 0.4);
+}
+
+    .bton-delete:hover {
+        background: rgba(255, 59, 48, 0.75);
+    }
